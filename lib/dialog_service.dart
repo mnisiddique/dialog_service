@@ -1,7 +1,6 @@
 library dialog_service;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/alert_service.dart';
+export 'src/bottomsheet_service.dart';
+export 'src/app_dialog.dart';
+export 'src/dialog_config.dart';
