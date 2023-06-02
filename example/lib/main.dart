@@ -2,7 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
+import 'alert/confirmation_alert.dart';
+import 'alert/willpopscope_alert.dart';
+import 'bottomsheet/contact_bottomsheet.dart';
+import 'buttons/buttons.dart';
+import 'dependency.dart';
+
 void main() {
+  Dependency.init();
   runApp(const MyApp());
 }
 
@@ -31,12 +38,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool? _isConfirmed;
+  Contact? _contact;
+
+  Future<void> onAlertExamplePressed() async {
+    final isConfirmed = await alertService.showAlert<bool>(
+      context,
+      ConfirmationAlert(),
+    );
+
+    setState(() {
+      _isConfirmed = isConfirmed;
+    });
+  }
+
+  Future<void> onBottomsheetExamplePressed() async {
+    final contact = await bottomSheetService.showBottomSheet(
+      context,
+      ContactBottomSheet(),
+    );
+    setState(() {
+      _contact = contact;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        log("Attempted poping scope");
-        return false;
+        return await alertService.showAlert(context, WillPopScopeAlert()) ??
+            false;
       },
       child: Scaffold(
         appBar: AppBar(
@@ -45,53 +76,27 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              AlertExampleButton(),
-              BottomSheetExampleButton(),
+            children: <Widget>[
+              _isConfirmed == null
+                  ? const SizedBox()
+                  : Text("Is Confirmed: $_isConfirmed"),
+              AlertExampleButton(
+                onPressed: onAlertExamplePressed,
+              ),
+              const SizedBox(height: 16.0),
+              _contact == null
+                  ? const SizedBox()
+                  : Text("Name: ${_contact?.name}"),
+              _contact == null
+                  ? const SizedBox()
+                  : Text("MobileNo: ${_contact?.mobileNo}"),
+              BottomSheetExampleButton(
+                onPressed: onBottomsheetExamplePressed,
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class BottomSheetExampleButton extends StatelessWidget {
-  const BottomSheetExampleButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialButton(
-      color: Colors.blue,
-      child: const Text(
-        "Bottomsheet Example",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 14.0,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      onPressed: () {},
-    );
-  }
-}
-
-class AlertExampleButton extends StatelessWidget {
-  const AlertExampleButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialButton(
-      color: Colors.blue,
-      child: const Text(
-        "Alert Example",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 14.0,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      onPressed: () {},
     );
   }
 }
