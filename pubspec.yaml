@@ -1,7 +1,7 @@
 name: dialog_service
-description: A new Flutter package project.
+description: A simple flutter package to make the use of dialog clean and easy.
+homepage: https://github.com/mnisiddique/dialog_service
 version: 0.0.1
-homepage:
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
