@@ -9,18 +9,20 @@ A flutter package that aims to simplify clean usage of alert and bottomsheet dai
 - 5. Default implementation of dialog showing mechanism is modifiable/extendable.
 
 # To use the package depend on it
-
-  `dialog_service:
-    git:
-      url: https://github.com/mnisiddique/dialog_service.git
-      ref: v0.0.1`
-
+```
+dialog_service:
+   git:
+     url: https://github.com/mnisiddique/dialog_service.git
+     ref: v0.0.1
+```
 # Import it
-`import 'package:dialog_service/dialog_service.dart';`
+```
+import 'package:dialog_service/dialog_service.dart';
+```
 
 # Use it like below
 
-`
+```
 class ConfirmationAlert extends AppAlert {
   @override
   AlertDialog build() {
@@ -49,6 +51,6 @@ AlertService alertService = AlertServiceImpl()
       context,
       ConfirmationAlert(),
     );
- `
+```
  
 [Complete example](https://github.com/mnisiddique/dialog_service/tree/main/example)
