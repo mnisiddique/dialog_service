@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'alert/confirmation_alert.dart';
@@ -40,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Contact? _contact;
 
   Future<void> onAlertExamplePressed() async {
-    final isConfirmed = await alertService.showAlert<bool>(
+    final isConfirmed = await systemBackAwareAlertService.showAlert<bool>(
       context,
       ConfirmationAlert(),
     );
@@ -49,6 +51,28 @@ class _MyHomePageState extends State<MyHomePage> {
       _isConfirmed = isConfirmed;
     });
   }
+
+  Future<bool> _onWillPop() async {
+    return await systemBackAwareAlertService.showAlert(
+            context, WillPopScopeAlert()) ??
+        false;
+  }
+
+  // Future<void> onAlertExamplePressed() async {
+  //   final isConfirmed = await alertService.showAlert<bool>(
+  //     context,
+  //     ConfirmationAlert(),
+  //   );
+  //   log("isAlertShowing: ${alertService.isAlertShowing}");
+
+  //   setState(() {
+  //     _isConfirmed = isConfirmed;
+  //   });
+  // }
+
+  // Future<bool> _onWillPop() async {
+  //   return await alertService.showAlert(context, WillPopScopeAlert()) ?? false;
+  // }
 
   Future<void> onBottomsheetExamplePressed() async {
     final contact = await bottomSheetService.showBottomSheet(
@@ -63,10 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        return await alertService.showAlert(context, WillPopScopeAlert()) ??
-            false;
-      },
+      onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),

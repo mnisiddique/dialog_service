@@ -7,10 +7,14 @@ abstract class Dependency {
 
   static void init() {
     getIt.registerLazySingleton(() => AlertServiceImpl());
+    getIt.registerLazySingleton(
+        () => AlertServiceSystemBackInterceptionAwareImpl());
     getIt.registerLazySingleton(() => BottomSheetServiceImpl());
   }
 }
 
 AlertService get alertService => Dependency.getIt<AlertServiceImpl>();
+AlertService get systemBackAwareAlertService =>
+    Dependency.getIt<AlertServiceSystemBackInterceptionAwareImpl>();
 BottomSheetService get bottomSheetService =>
     Dependency.getIt<BottomSheetServiceImpl>();
