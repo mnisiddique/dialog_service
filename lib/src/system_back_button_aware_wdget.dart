@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 
