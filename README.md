@@ -13,7 +13,7 @@ A flutter package that aims to simplify clean usage of alert and bottomsheet dai
 dialog_service:
    git:
      url: https://github.com/mnisiddique/dialog_service.git
-     ref: v0.0.1
+     ref: v0.0.2
 ```
 # Import it
 ```
@@ -52,5 +52,17 @@ AlertService alertService = AlertServiceImpl()
       ConfirmationAlert(),
     );
 ```
- 
+# Special Scenario
+- If any project have multiple Navigator or `WillPopScope` widget is not working
+  for alert then following alert service implementation can be used.
+
+  ```
+   final isConfirmed = await systemBackAwareAlertService.showAlert<bool>(
+      context,
+      ConfirmationAlert(),
+    );
+  ```
+
+
+
 [Complete example](https://github.com/mnisiddique/dialog_service/tree/main/example)
